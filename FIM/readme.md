@@ -40,7 +40,7 @@ The screenshot below is taken directly from the monitoring dashboard. Each row i
 - **rule.description** — a plain-English description of the event
 - **rule.level** — how serious the system considers the event (higher number = more attention-worthy)
 
-![Wazuh FIM alert dashboard showing add, modify, and delete events](screenshots/fim.png)
+![Wazuh FIM alert dashboard showing add, modify, and delete events](Technical/screenshots/fim.png)
 
 In this capture, the system correctly identified:
 
