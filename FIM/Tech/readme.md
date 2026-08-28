@@ -9,7 +9,7 @@ Real-time detection of file creation, modification, and deletion on a Windows en
 
 All findings in this document are based on three raw Wazuh alerts captured during a controlled `add → modify → delete` test involving the same file, `test.txt`. The relevant alert payloads are included in the appendix.
 
----
+
 
 ## 1. Summary
 
@@ -22,6 +22,7 @@ A single test file, `test.txt`, was:
 3. Deleted from the monitored directory.
 
 Wazuh generated a separate alert for each operation:
+![FIM events](Screenshots/fim.png)
 
 | Event    | Decoder                      | Rule ID | Level |
 | -------- | ---------------------------- | ------: | ----: |
@@ -33,7 +34,6 @@ The SHA256 values recorded in the alerts can be used to link the observed file s
 
 This provides strong hash-based evidence that the three alerts represent a continuous observed lifecycle of `test.txt`.
 
----
 
 ## 2. Objectives
 
@@ -45,7 +45,6 @@ The project had three primary objectives:
 
 A secondary objective was to establish a foundation for future correlation between FIM events and Windows endpoint telemetry such as Sysmon.
 
----
 
 ## 3. Lab Architecture
 
@@ -160,7 +159,6 @@ A controlled lifecycle test was performed against a single file named `test.txt`
 
 Using one file for all three operations allowed the resulting alerts to be compared and correlated using their file path, timestamps, size, and cryptographic hashes.
 
----
 
 ## 7. Detection Results
 
@@ -183,7 +181,6 @@ Wazuh detected the appearance of `test.txt` in the monitored directory.
 
 The alert recorded the initial file size as 32 bytes and generated a SHA256 hash for the observed file state.
 
----
 
 ### 7.2 File Modification
 
@@ -225,7 +222,6 @@ This shows that the file state observed immediately before modification has the 
 
 The event triggered rule 550 at level 7.
 
----
 
 ### 7.3 File Deletion
 
@@ -258,7 +254,6 @@ This links the deletion event to the file state produced by the modification.
 
 The event triggered rule 553 at level 7.
 
----
 
 ## 8. Hash-Based File Lifecycle Analysis
 
@@ -312,11 +307,12 @@ Together, the matching SHA256 values and consistent file-size progression provid
 
 This is useful during investigation because an analyst can use the FIM telemetry to determine how the observed file state changed over time.
 
----
 
 ## 9. Event Timeline
 
 The Wazuh alerts contain timestamps that place the three events in sequence:
+
+
 
 | Event    | File       | Wazuh event timestamp     |
 | -------- | ---------- | ------------------------- |
@@ -330,7 +326,6 @@ This is consistent with the controlled test being executed as a rapid create →
 
 These timestamps can also be used as a starting point when correlating FIM activity with other endpoint telemetry.
 
----
 
 ## 10. SOC Triage
 
@@ -377,7 +372,6 @@ For this laboratory test, all file operations were intentional and authorized.
 
 In a production environment, an unexpected modification followed by deletion could warrant further investigation, particularly when the monitored directory contains sensitive configuration files, executables, or other security-relevant data.
 
----
 
 ## 11. Coverage and Limitations
 
@@ -395,7 +389,7 @@ FIM records that a monitored file changed, when it changed, and which integrity 
 
 This is the core limitation of FIM as a standalone control: it is strong evidence that *something* changed, but it must be paired with process and user telemetry to establish *who* and *how*.
 
----
+
 
 ## 12. Validation Summary
 
@@ -407,7 +401,6 @@ This is the core limitation of FIM as a standalone control: it is strong evidenc
 | Validate SHA256 chain   | Matching values       | Values matched across events|
 | Validate real-time mode | `mode: realtime`      | Present in all three events |
 
----
 
 ## 13. Conclusion
 
@@ -419,171 +412,21 @@ The project also demonstrates the role and limitation of FIM within a SOC. FIM c
 
 FIM can therefore serve as one layer of endpoint visibility, with Sysmon and other Windows telemetry providing additional context for investigation and incident response.
 
----
 
-# Appendix — Captured Wazuh Alerts
 
-The following alerts were retrieved from the Wazuh alert index:
 
-`wazuh-alerts-4.x-2026.08.26`
+## 14. Project Artifacts
 
-The payloads below contain the fields used to perform the analysis in this document.
+The project contains the following evidence:
 
-## A. Added
+1. `fim.png` — Wazuh dashboard screenshot showing the three FIM alerts (file added, modified, and deleted) with timestamps, file paths, event types, and rule information.
 
-```json
-{
-  "agent": {
-    "id": "001",
-    "name": "parallels",
-    "ip": "192.168.x.x"
-  },
-  "manager": {
-    "name": "LAPTOP-VO1HEOP5"
-  },
-  "decoder": {
-    "name": "syscheck_new_entry"
-  },
-  "location": "syscheck",
-  "rule": {
-    "id": "554",
-    "level": 5,
-    "description": "File added to the system.",
-    "groups": [
-      "ossec",
-      "syscheck",
-      "syscheck_entry_added",
-      "syscheck_file"
-    ]
-  },
-  "syscheck": {
-    "path": "...\\folder-to-be-monitored\\test.txt",
-    "event": "added",
-    "mode": "realtime",
-    "size_after": "32",
-    "md5_after": "4d481386ae4e514203e0cd1f7a8098c6",
-    "sha1_after": "96a3632b9ed8a49b2581daebf135a9238ebee5e4",
-    "sha256_after": "ca7666026c7ad7fcc52be8f5146c0972901eb1a0354a673519622a4aa2a13eac",
-    "uname_after": "Administrators",
-    "mtime_after": "2026-08-26T10:34:44"
-  },
-  "full_log": "File '...\\folder-to-be-monitored\\test.txt' added\nMode: realtime",
-  "timestamp": "2026-08-26T13:34:44.778"
-}
-```
+2. `added.json` — Complete Wazuh alert payload for the file creation event, including syscheck metadata and full event details.
 
-## B. Modified
+3. `modified.json` — Complete Wazuh alert payload for the file modification event, including integrity checksum information showing the file contents changed.
 
-```json
-{
-  "agent": {
-    "id": "001",
-    "name": "parallels",
-    "ip": "192.168.x.x"
-  },
-  "manager": {
-    "name": "LAPTOP-VO1HEOP5"
-  },
-  "decoder": {
-    "name": "syscheck_integrity_changed"
-  },
-  "location": "syscheck",
-  "rule": {
-    "id": "550",
-    "level": 7,
-    "description": "Integrity checksum changed.",
-    "groups": [
-      "ossec",
-      "syscheck",
-      "syscheck_entry_modified",
-      "syscheck_file"
-    ],
-    "mitre": {
-      "id": [
-        "T1565.001"
-      ],
-      "technique": [
-        "Stored Data Manipulation"
-      ],
-      "tactic": [
-        "Impact"
-      ]
-    }
-  },
-  "syscheck": {
-    "path": "...\\folder-to-be-monitored\\test.txt",
-    "event": "modified",
-    "mode": "realtime",
-    "changed_attributes": "size, md5, sha1, sha256",
-    "size_before": "32",
-    "size_after": "60",
-    "md5_before": "4d481386ae4e514203e0cd1f7a8098c6",
-    "md5_after": "22b6c6112603cf431f8120ca0e96ffe5",
-    "sha1_before": "96a3632b9ed8a49b2581daebf135a9238ebee5e4",
-    "sha1_after": "185340b445d45ff7af7584894f5456fb87615a4e",
-    "sha256_before": "ca7666026c7ad7fcc52be8f5146c0972901eb1a0354a673519622a4aa2a13eac",
-    "sha256_after": "cea79667bca3fe076d661a4d2c99e7c37d6acc52843d24a9fc1377f43b85313d",
-    "mtime_after": "2026-08-26T10:34:44"
-  },
-  "timestamp": "2026-08-26T13:34:44.948"
-}
-```
+4. `deleted.json` — Complete Wazuh alert payload for the file deletion event, documenting the removal of the monitored file.
 
-## C. Deleted
-
-```json
-{
-  "agent": {
-    "id": "001",
-    "name": "parallels",
-    "ip": "192.168.x.x"
-  },
-  "manager": {
-    "name": "LAPTOP-VO1HEOP5"
-  },
-  "decoder": {
-    "name": "syscheck_deleted"
-  },
-  "location": "syscheck",
-  "rule": {
-    "id": "553",
-    "level": 7,
-    "description": "File deleted.",
-    "groups": [
-      "ossec",
-      "syscheck",
-      "syscheck_entry_deleted",
-      "syscheck_file"
-    ],
-    "mitre": {
-      "id": [
-        "T1070.004",
-        "T1485"
-      ],
-      "technique": [
-        "File Deletion",
-        "Data Destruction"
-      ],
-      "tactic": [
-        "Defense Evasion",
-        "Impact"
-      ]
-    }
-  },
-  "syscheck": {
-    "path": "...\\folder-to-be-monitored\\test.txt",
-    "event": "deleted",
-    "mode": "realtime",
-    "size_after": "60",
-    "md5_after": "22b6c6112603cf431f8120ca0e96ffe5",
-    "sha1_after": "185340b445d45ff7af7584894f5456fb87615a4e",
-    "sha256_after": "cea79667bca3fe076d661a4d2c99e7c37d6acc52843d24a9fc1377f43b85313d",
-    "uname_after": "Administrators",
-    "mtime_after": "2026-08-26T10:34:44"
-  },
-  "full_log": "File '...\\folder-to-be-monitored\\test.txt' deleted\nMode: realtime",
-  "timestamp": "2026-08-26T13:34:45.009"
-}
-```
+These four artifacts provide complete evidence of the file lifecycle monitoring capability: the screenshot shows the alerts, while the three JSON files contain the underlying technical data captured for each event.
 
 **Test conclusion:** All three FIM operations were successfully detected in real time. The matching SHA256 values and consistent file-size progression provide strong evidence linking the three alerts into a single observed file lifecycle.

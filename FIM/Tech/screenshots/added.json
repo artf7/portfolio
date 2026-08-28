@@ -1,0 +1,174 @@
+{
+  "_index": "wazuh-alerts-4.x-2026.08.26",
+  "_id": "fUvsPqABS1ZAik3woo86",
+  "_score": null,
+  "_source": {
+    "syscheck": {
+      "mode": "realtime",
+      "path": "c:\\users\\artemfedorov\\documents\\folder-to-be-monitored\\test.txt",
+      "sha1_after": "96a3632b9ed8a49b2581daebf135a9238ebee5e4",
+      "uname_after": "Administrators",
+      "mtime_after": "2026-08-26T13:34:44",
+      "attrs_after": [
+        "ARCHIVE"
+      ],
+      "size_after": "32",
+      "uid_after": "S-1-5-32-544",
+      "win_perm_after": [
+        {
+          "allowed": [
+            "DELETE",
+            "READ_CONTROL",
+            "WRITE_DAC",
+            "WRITE_OWNER",
+            "SYNCHRONIZE",
+            "READ_DATA",
+            "WRITE_DATA",
+            "APPEND_DATA",
+            "READ_EA",
+            "WRITE_EA",
+            "EXECUTE",
+            "READ_ATTRIBUTES",
+            "WRITE_ATTRIBUTES",
+            [
+              "DELETE",
+              "READ_CONTROL",
+              "WRITE_DAC",
+              "WRITE_OWNER",
+              "SYNCHRONIZE",
+              "READ_DATA",
+              "WRITE_DATA",
+              "APPEND_DATA",
+              "READ_EA",
+              "WRITE_EA",
+              "EXECUTE",
+              "READ_ATTRIBUTES",
+              "WRITE_ATTRIBUTES"
+            ],
+            [
+              "DELETE",
+              "READ_CONTROL",
+              "WRITE_DAC",
+              "WRITE_OWNER",
+              "SYNCHRONIZE",
+              "READ_DATA",
+              "WRITE_DATA",
+              "APPEND_DATA",
+              "READ_EA",
+              "WRITE_EA",
+              "EXECUTE",
+              "READ_ATTRIBUTES",
+              "WRITE_ATTRIBUTES"
+            ]
+          ],
+          "name": "SYSTEM"
+        },
+        {
+          "allowed": [
+            "DELETE",
+            "READ_CONTROL",
+            "WRITE_DAC",
+            "WRITE_OWNER",
+            "SYNCHRONIZE",
+            "READ_DATA",
+            "WRITE_DATA",
+            "APPEND_DATA",
+            "READ_EA",
+            "WRITE_EA",
+            "EXECUTE",
+            "READ_ATTRIBUTES",
+            "WRITE_ATTRIBUTES"
+          ],
+          "name": "Administrators"
+        },
+        {
+          "allowed": [
+            "DELETE",
+            "READ_CONTROL",
+            "WRITE_DAC",
+            "WRITE_OWNER",
+            "SYNCHRONIZE",
+            "READ_DATA",
+            "WRITE_DATA",
+            "APPEND_DATA",
+            "READ_EA",
+            "WRITE_EA",
+            "EXECUTE",
+            "READ_ATTRIBUTES",
+            "WRITE_ATTRIBUTES"
+          ],
+          "name": "artemfedorov"
+        }
+      ],
+      "event": "added",
+      "md5_after": "4d481386ae4e514203e0cd1f7a8098c6",
+      "sha256_after": "ca7666626c7ad7fcc52be8f5146c0972901eb1a0354a673519622a4aa2a13eac"
+    },
+    "input": {
+      "type": "log"
+    },
+    "agent": {
+      "ip": "192.168.4.41",
+      "name": "parallels",
+      "id": "001"
+    },
+    "manager": {
+      "name": "LAPTOP-VO1HEOP5"
+    },
+    "rule": {
+      "firedtimes": 1,
+      "mail": false,
+      "level": 5,
+      "pci_dss": [
+        "11.5"
+      ],
+      "hipaa": [
+        "164.312.c.1",
+        "164.312.c.2"
+      ],
+      "tsc": [
+        "PI1.4",
+        "PI1.5",
+        "CC6.1",
+        "CC6.8",
+        "CC7.2",
+        "CC7.3"
+      ],
+      "description": "File added to the system.",
+      "groups": [
+        "ossec",
+        "syscheck",
+        "syscheck_entry_added",
+        "syscheck_file"
+      ],
+      "id": "554",
+      "nist_800_53": [
+        "SI.7"
+      ],
+      "gpg13": [
+        "4.11"
+      ],
+      "gdpr": [
+        "II_5.1.f"
+      ]
+    },
+    "location": "syscheck",
+    "decoder": {
+      "name": "syscheck_new_entry"
+    },
+    "id": "1787762084.33872",
+    "full_log": "File 'c:\\users\\artemfedorov\\documents\\folder-to-be-monitored\\test.txt' added\nMode: realtime\n",
+    "timestamp": "2026-08-26T13:34:44.778-0300"
+  },
+  "fields": {
+    "syscheck.mtime_after": [
+      "2026-08-26T13:34:44.000Z"
+    ],
+    "timestamp": [
+      "2026-08-26T16:34:44.778Z"
+    ]
+  },
+  "sort": [
+    1787762084778
+  ]
+}

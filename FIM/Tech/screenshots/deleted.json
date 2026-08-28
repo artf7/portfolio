@@ -1,0 +1,188 @@
+{
+  "_index": "wazuh-alerts-4.x-2026.08.26",
+  "_id": "f0vsPqABS1ZAik3woo86",
+  "_score": null,
+  "_source": {
+    "syscheck": {
+      "mode": "realtime",
+      "path": "c:\\users\\artemfedorov\\documents\\folder-to-be-monitored\\test.txt",
+      "sha1_after": "185340b445d45ff7af7584894f5456fb87615a4e",
+      "uname_after": "Administrators",
+      "mtime_after": "2026-08-26T13:34:44",
+      "attrs_after": [
+        "ARCHIVE"
+      ],
+      "size_after": "60",
+      "uid_after": "S-1-5-32-544",
+      "win_perm_after": [
+        {
+          "allowed": [
+            "DELETE",
+            "READ_CONTROL",
+            "WRITE_DAC",
+            "WRITE_OWNER",
+            "SYNCHRONIZE",
+            "READ_DATA",
+            "WRITE_DATA",
+            "APPEND_DATA",
+            "READ_EA",
+            "WRITE_EA",
+            "EXECUTE",
+            "READ_ATTRIBUTES",
+            "WRITE_ATTRIBUTES",
+            [
+              "DELETE",
+              "READ_CONTROL",
+              "WRITE_DAC",
+              "WRITE_OWNER",
+              "SYNCHRONIZE",
+              "READ_DATA",
+              "WRITE_DATA",
+              "APPEND_DATA",
+              "READ_EA",
+              "WRITE_EA",
+              "EXECUTE",
+              "READ_ATTRIBUTES",
+              "WRITE_ATTRIBUTES"
+            ],
+            [
+              "DELETE",
+              "READ_CONTROL",
+              "WRITE_DAC",
+              "WRITE_OWNER",
+              "SYNCHRONIZE",
+              "READ_DATA",
+              "WRITE_DATA",
+              "APPEND_DATA",
+              "READ_EA",
+              "WRITE_EA",
+              "EXECUTE",
+              "READ_ATTRIBUTES",
+              "WRITE_ATTRIBUTES"
+            ]
+          ],
+          "name": "SYSTEM"
+        },
+        {
+          "allowed": [
+            "DELETE",
+            "READ_CONTROL",
+            "WRITE_DAC",
+            "WRITE_OWNER",
+            "SYNCHRONIZE",
+            "READ_DATA",
+            "WRITE_DATA",
+            "APPEND_DATA",
+            "READ_EA",
+            "WRITE_EA",
+            "EXECUTE",
+            "READ_ATTRIBUTES",
+            "WRITE_ATTRIBUTES"
+          ],
+          "name": "Administrators"
+        },
+        {
+          "allowed": [
+            "DELETE",
+            "READ_CONTROL",
+            "WRITE_DAC",
+            "WRITE_OWNER",
+            "SYNCHRONIZE",
+            "READ_DATA",
+            "WRITE_DATA",
+            "APPEND_DATA",
+            "READ_EA",
+            "WRITE_EA",
+            "EXECUTE",
+            "READ_ATTRIBUTES",
+            "WRITE_ATTRIBUTES"
+          ],
+          "name": "artemfedorov"
+        }
+      ],
+      "event": "deleted",
+      "md5_after": "22b6c6112603cf431f8120ca0e96ffe5",
+      "sha256_after": "cea79667bca3fe076d661a4d2c99e7c37d6acc52843d24a9fc1377f43b85313d"
+    },
+    "input": {
+      "type": "log"
+    },
+    "agent": {
+      "ip": "192.168.4.41",
+      "name": "parallels",
+      "id": "001"
+    },
+    "manager": {
+      "name": "LAPTOP-VO1HEOP5"
+    },
+    "rule": {
+      "mail": false,
+      "level": 7,
+      "pci_dss": [
+        "11.5"
+      ],
+      "hipaa": [
+        "164.312.c.1",
+        "164.312.c.2"
+      ],
+      "tsc": [
+        "PI1.4",
+        "PI1.5",
+        "CC6.1",
+        "CC6.8",
+        "CC7.2",
+        "CC7.3"
+      ],
+      "description": "File deleted.",
+      "groups": [
+        "ossec",
+        "syscheck",
+        "syscheck_entry_deleted",
+        "syscheck_file"
+      ],
+      "nist_800_53": [
+        "SI.7"
+      ],
+      "gdpr": [
+        "II_5.1.f"
+      ],
+      "firedtimes": 1,
+      "mitre": {
+        "technique": [
+          "File Deletion",
+          "Data Destruction"
+        ],
+        "id": [
+          "T1070.004",
+          "T1485"
+        ],
+        "tactic": [
+          "Defense Evasion",
+          "Impact"
+        ]
+      },
+      "id": "553",
+      "gpg13": [
+        "4.11"
+      ]
+    },
+    "location": "syscheck",
+    "decoder": {
+      "name": "syscheck_deleted"
+    },
+    "id": "1787762085.36842",
+    "full_log": "File 'c:\\users\\artemfedorov\\documents\\folder-to-be-monitored\\test.txt' deleted\nMode: realtime\n",
+    "timestamp": "2026-08-26T13:34:45.009-0300"
+  },
+  "fields": {
+    "syscheck.mtime_after": [
+      "2026-08-26T13:34:44.000Z"
+    ],
+    "timestamp": [
+      "2026-08-26T16:34:45.009Z"
+    ]
+  },
+  "sort": [
+    1787762085009
+  ]
+}

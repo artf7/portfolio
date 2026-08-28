@@ -1,92 +1,223 @@
-# File Integrity Monitoring (FIM) — Project Summary
+# Wazuh File Integrity Monitoring — Non-Technical Project Overview
 
-**Project:** Wazuh Security Monitoring — File Integrity Monitoring Module
+## 1. Project Overview
 
-## What is this project?
+This project demonstrates how an organization can monitor important files on Windows computers and detect when those files are **created, changed, or deleted**.
 
-This project demonstrates the use of **File Integrity Monitoring (FIM)** to detect changes to files on a Windows endpoint.
+The solution uses Wazuh File Integrity Monitoring to continuously watch a designated location on a Windows 11 computer. When a change occurs, Wazuh generates a security event that can be reviewed by a security analyst.
 
-FIM continuously monitors selected files and directories and generates security events when files are **created, modified, or deleted**. This provides visibility into changes that might otherwise happen without an obvious warning to the user or security team.
+The project was validated through a controlled test in which a single file was created, modified, and then deleted. Wazuh successfully detected all three actions.
 
-FIM works similar way as a sensor for important files: it records **what changed, which file was affected, and when the change occurred**.
 
-## Why this matters to the business
 
-Unexpected changes to important files can be an early indicator of a security incident, configuration problem, accidental change, or unauthorized activity.
+## 2. Why File Integrity Monitoring Matters
 
-A working FIM capability can help an organization:
+Files can change for many reasons. Some changes are completely legitimate, such as software updates, administrator activity, or normal application operations.
 
-* **Detect file tampering quickly.** Security teams can be alerted when monitored files are created, modified, or deleted.
-* **Improve security visibility.** Instead of relying on users or administrators to report changes, the monitoring system automatically records them.
-* **Support investigations and audits.** Events provide a historical record showing the affected file, type of change, and event timestamp.
-* **Reduce the time to detect unexpected activity.** Near-real-time monitoring allows security teams to investigate suspicious changes shortly after they occur.
-* **Protect security-relevant files.** FIM can be particularly useful when monitoring configuration files, application files, scripts, or other important system data.
+However, unexpected file changes can also be an indicator of a security incident.
 
-## What was built and tested
+For example, an attacker who gains access to a computer might:
 
-Wazuh was configured to monitor a dedicated test directory on a Windows 11 endpoint in real time.
+* Create a new file containing malicious code.
+* Modify an existing configuration or application.
+* Replace a legitimate file with a malicious version.
+* Delete files to hide evidence or disrupt systems.
 
-To demonstrate the detection capability, a single test file, `test.txt`, was taken through a complete file lifecycle:
+File Integrity Monitoring provides visibility into these changes so that security teams can identify activity that may require investigation.
 
-1. **Created** inside the monitored directory.
-2. **Modified** by changing its contents.
-3. **Deleted** from the monitored directory.
 
-Wazuh generated a separate security event for each operation.
+## 3. What Was Built
 
-The resulting alerts were:
+The project configured Wazuh to monitor a specific directory on a Windows 11 endpoint in real time.
 
-| Event    | Wazuh Rule | Description                |
-| -------- | ---------: | -------------------------- |
-| Added    |        554 | File added to the system   |
-| Modified |        550 | Integrity checksum changed |
-| Deleted  |        553 | File deleted               |
+The monitoring process can be summarized simply as:
 
-The three events were recorded in the correct sequence within approximately **0.23 seconds**, demonstrating that the configured real-time monitoring was active during the test.
+**Monitor → Detect → Record → Investigate**
 
-## Evidence: Wazuh FIM Alerts
+When something happens to a monitored file, Wazuh records the event and provides information that can help an analyst understand what changed.
 
-The screenshot below shows the three events captured by the Wazuh dashboard.
+The project specifically validated three types of activity:
 
-![Wazuh FIM alerts showing the same file being added, modified, and deleted](Tech/screenshots/fim.png)
+**File Created → File Modified → File Deleted**
 
-The dashboard shows:
+Each action generated its own security alert.
 
-* **Timestamp** — when the event was recorded
-* **`syscheck.path`** — the file affected by the event
-* **`syscheck.event`** — the type of change: `added`, `modified`, or `deleted`
-* **`rule.description`** — Wazuh's description of the detected event
-* **`rule.level`** — the severity level assigned by the Wazuh rule
 
-All three events reference the same monitored file path, allowing the activity to be viewed as one observed file lifecycle: **added → modified → deleted**.
 
-The underlying Wazuh alerts also contain file integrity information, including cryptographic hashes. These values provide additional evidence for correlating the observed file states across the three events.
+## 4. How It Works — Simple Explanation
 
-## What the test demonstrates
+Think of the system as a **security camera for files**.
 
-The test demonstrates that the configured Wazuh FIM control can:
+Wazuh keeps track of the expected state of files in a monitored location.
 
-* Detect file creation in real time.
-* Detect changes to an existing file.
-* Detect file deletion.
-* Record the affected file and event timestamp.
-* Assign a Wazuh detection rule and severity to each event.
-* Provide file integrity information that can be used to correlate observed file states.
+When a file appears, changes, or disappears, Wazuh notices the difference and records it.
 
-This provides a practical example of how FIM can contribute to endpoint security monitoring.
+For example:
 
-## Important limitation
+### Step 1 — File Created
 
-FIM establishes that a monitored file changed, but **FIM alone does not determine which user or process caused the change**.
+A new file called `test.txt` is placed in the monitored directory.
 
-For a real security investigation, FIM can therefore be combined with additional endpoint telemetry, such as Sysmon, to provide process and user context around the file activity.
+Wazuh detects that a new file has appeared and records its initial state.
 
-For this project, all three file operations were intentional and performed as part of a controlled test.
+### Step 2 — File Modified
 
-## Bottom line
+The contents of `test.txt` are changed.
 
-This project demonstrates a working and verifiable file integrity monitoring capability using Wazuh.
+Wazuh detects that the file is no longer the same and records information about the change.
 
-A controlled **create → modify → delete** sequence was successfully detected on a Windows endpoint, with each operation recorded as a separate security event.
+### Step 3 — File Deleted
 
-The result demonstrates how FIM can give a security team timely visibility into changes to monitored files and provide useful evidence for further investigation when unexpected activity occurs.
+The file is removed.
+
+Wazuh detects that the previously monitored file is no longer present and records the deletion.
+
+This creates a history of the file's observed lifecycle.
+
+
+## 5. What Evidence Does the System Capture?
+
+Wazuh records information that allows analysts to compare the state of a file before and after a change.
+
+This includes information such as:
+
+* File size
+* Modification time
+* File ownership
+* File fingerprints
+* The type of change that occurred
+* When the change occurred
+* The location of the file
+
+One particularly useful piece of information is the file's **digital fingerprint**, commonly called a hash.
+
+A hash can be thought of as a unique identifier for the contents of a file. If the contents change, the fingerprint normally changes as well.
+
+In this project, the fingerprints from the different alerts matched in a consistent sequence, allowing the three events to be linked to the same `test.txt` file.
+
+
+## 6. Project Results
+
+The test successfully demonstrated all three required capabilities:
+
+| Test                 | Result                    |
+| -------------------- | ------------------------- |
+| File creation        | Successfully detected     |
+| File modification    | Successfully detected     |
+| File deletion        | Successfully detected     |
+| File state tracking  | Successfully demonstrated |
+| Real-time monitoring | Successfully validated    |
+
+The three events occurred within approximately **0.23 seconds**, demonstrating that the monitoring system was able to capture the controlled changes very quickly.
+
+The validation results also confirmed that the file fingerprints formed a consistent chain between the creation, modification, and deletion events.
+
+
+## 7. Security Operations Perspective
+
+From a Security Operations Center (SOC) perspective, the main value of this project is **visibility**.
+
+A FIM alert tells an analyst that something changed in a monitored location.
+
+The analyst can then ask:
+
+* Was this change expected?
+* Was the file supposed to be created?
+* Who or what might have caused the change?
+* Was the file modified as part of legitimate activity?
+* Was the file deleted intentionally?
+* Does the change correspond with other suspicious activity?
+
+This distinction is important because **a file change is not automatically a security incident**.
+
+For example, a legitimate software update may modify many files. An administrator may intentionally delete a file. The alert provides the starting point for investigation rather than automatically declaring an attack.
+
+
+## 8. What the Project Demonstrates
+
+The project demonstrates that Wazuh can provide real-time visibility into the lifecycle of files within a monitored Windows directory.
+
+More specifically, it demonstrates that the system can:
+
+* Detect when a new file appears.
+* Detect when an existing file changes.
+* Detect when a file is removed.
+* Record information about the file before and after changes.
+* Link multiple events to the same file.
+* Provide a timeline that can support security investigations.
+
+The captured data was sufficient to reconstruct the complete observed lifecycle of `test.txt`.
+
+
+## 9. Important Limitation
+
+File Integrity Monitoring answers an important question:
+
+> **"Did this file change?"**
+
+However, by itself, it does not fully answer:
+
+> **"Who changed it and why?"**
+
+The project documentation specifically identifies this as a limitation.
+
+FIM can show that a file changed, when it changed, and how its integrity information changed. Additional endpoint monitoring is required to determine which user or process caused the change.
+
+This is why FIM is best viewed as **one layer of security monitoring**, rather than a complete investigation solution.
+
+
+## 10. Future Improvements
+
+The project provides a foundation that could be expanded by combining file monitoring with additional endpoint information.
+
+For example, future development could correlate file changes with:
+
+* The user who performed the action
+* The application or process responsible
+* Other Windows security events
+* Network activity
+* Other suspicious events occurring at the same time
+
+This would allow analysts to move from simply knowing **that a file changed** to understanding **what caused the change and whether it was suspicious**.
+
+
+## 11. Business and Security Value
+
+The main value of this project is improved **endpoint visibility and investigation capability**.
+
+In a real environment, monitoring important files can help security teams identify unexpected changes that could otherwise go unnoticed.
+
+The capability can support:
+
+**Early Detection**
+
+Unexpected changes can be identified quickly.
+
+**Investigation**
+
+Security analysts have historical information about what happened to a monitored file.
+
+**Accountability**
+
+File activity can be correlated with additional security information to help determine what caused a change.
+
+**Incident Response**
+
+File-change information can provide useful evidence when investigating a potential security incident.
+
+**Defense-in-Depth**
+
+FIM provides an additional layer of visibility alongside other endpoint security controls.
+
+
+## 12. Conclusion
+
+This project successfully validated Wazuh File Integrity Monitoring on a Windows 11 endpoint.
+
+A controlled test created, modified, and deleted the same file. Wazuh detected each action in real time and recorded enough information to connect the three events into a single file lifecycle.
+
+The project demonstrates a simple but valuable security capability:
+
+**A file changes → Wazuh detects the change → The event is recorded → A security analyst can investigate it**
+
+While FIM alone cannot determine who or what caused a change, it provides an important layer of endpoint visibility. When combined with other security telemetry, it can help organizations detect suspicious activity and investigate potential security incidents more effectively.

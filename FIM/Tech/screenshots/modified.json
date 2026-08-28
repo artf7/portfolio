@@ -1,0 +1,195 @@
+{
+  "_index": "wazuh-alerts-4.x-2026.08.26",
+  "_id": "fkvsPqABS1ZAik3woo86",
+  "_score": null,
+  "_source": {
+    "syscheck": {
+      "size_before": "32",
+      "uname_after": "Administrators",
+      "mtime_after": "2026-08-26T13:34:44",
+      "size_after": "60",
+      "md5_before": "4d481386ae4e514203e0cd1f7a8098c6",
+      "win_perm_after": [
+        {
+          "allowed": [
+            "DELETE",
+            "READ_CONTROL",
+            "WRITE_DAC",
+            "WRITE_OWNER",
+            "SYNCHRONIZE",
+            "READ_DATA",
+            "WRITE_DATA",
+            "APPEND_DATA",
+            "READ_EA",
+            "WRITE_EA",
+            "EXECUTE",
+            "READ_ATTRIBUTES",
+            "WRITE_ATTRIBUTES",
+            [
+              "DELETE",
+              "READ_CONTROL",
+              "WRITE_DAC",
+              "WRITE_OWNER",
+              "SYNCHRONIZE",
+              "READ_DATA",
+              "WRITE_DATA",
+              "APPEND_DATA",
+              "READ_EA",
+              "WRITE_EA",
+              "EXECUTE",
+              "READ_ATTRIBUTES",
+              "WRITE_ATTRIBUTES"
+            ],
+            [
+              "DELETE",
+              "READ_CONTROL",
+              "WRITE_DAC",
+              "WRITE_OWNER",
+              "SYNCHRONIZE",
+              "READ_DATA",
+              "WRITE_DATA",
+              "APPEND_DATA",
+              "READ_EA",
+              "WRITE_EA",
+              "EXECUTE",
+              "READ_ATTRIBUTES",
+              "WRITE_ATTRIBUTES"
+            ]
+          ],
+          "name": "SYSTEM"
+        },
+        {
+          "allowed": [
+            "DELETE",
+            "READ_CONTROL",
+            "WRITE_DAC",
+            "WRITE_OWNER",
+            "SYNCHRONIZE",
+            "READ_DATA",
+            "WRITE_DATA",
+            "APPEND_DATA",
+            "READ_EA",
+            "WRITE_EA",
+            "EXECUTE",
+            "READ_ATTRIBUTES",
+            "WRITE_ATTRIBUTES"
+          ],
+          "name": "Administrators"
+        },
+        {
+          "allowed": [
+            "DELETE",
+            "READ_CONTROL",
+            "WRITE_DAC",
+            "WRITE_OWNER",
+            "SYNCHRONIZE",
+            "READ_DATA",
+            "WRITE_DATA",
+            "APPEND_DATA",
+            "READ_EA",
+            "WRITE_EA",
+            "EXECUTE",
+            "READ_ATTRIBUTES",
+            "WRITE_ATTRIBUTES"
+          ],
+          "name": "artemfedorov"
+        }
+      ],
+      "sha256_before": "ca7666626c7ad7fcc52be8f5146c0972901eb1a0354a673519622a4aa2a13eac",
+      "mode": "realtime",
+      "path": "c:\\users\\artemfedorov\\documents\\folder-to-be-monitored\\test.txt",
+      "sha1_after": "185340b445d45ff7af7584894f5456fb87615a4e",
+      "changed_attributes": [
+        "size",
+        "md5",
+        "sha1",
+        "sha256"
+      ],
+      "attrs_after": [
+        "ARCHIVE"
+      ],
+      "uid_after": "S-1-5-32-544",
+      "event": "modified",
+      "md5_after": "22b6c6112603cf431f8120ca0e96ffe5",
+      "sha1_before": "96a3632b9ed8a49b2581daebf135a9238ebee5e4",
+      "sha256_after": "cea79667bca3fe076d661a4d2c99e7c37d6acc52843d24a9fc1377f43b85313d"
+    },
+    "input": {
+      "type": "log"
+    },
+    "agent": {
+      "ip": "192.168.4.41",
+      "name": "parallels",
+      "id": "001"
+    },
+    "manager": {
+      "name": "LAPTOP-VO1HEOP5"
+    },
+    "rule": {
+      "mail": false,
+      "level": 7,
+      "pci_dss": [
+        "11.5"
+      ],
+      "hipaa": [
+        "164.312.c.1",
+        "164.312.c.2"
+      ],
+      "tsc": [
+        "PI1.4",
+        "PI1.5",
+        "CC6.1",
+        "CC6.8",
+        "CC7.2",
+        "CC7.3"
+      ],
+      "description": "Integrity checksum changed.",
+      "groups": [
+        "ossec",
+        "syscheck",
+        "syscheck_entry_modified",
+        "syscheck_file"
+      ],
+      "nist_800_53": [
+        "SI.7"
+      ],
+      "gdpr": [
+        "II_5.1.f"
+      ],
+      "firedtimes": 1,
+      "mitre": {
+        "technique": [
+          "Stored Data Manipulation"
+        ],
+        "id": [
+          "T1565.001"
+        ],
+        "tactic": [
+          "Impact"
+        ]
+      },
+      "id": "550",
+      "gpg13": [
+        "4.11"
+      ]
+    },
+    "location": "syscheck",
+    "decoder": {
+      "name": "syscheck_integrity_changed"
+    },
+    "id": "1787762084.35120",
+    "full_log": "File 'c:\\users\\artemfedorov\\documents\\folder-to-be-monitored\\test.txt' modified\nMode: realtime\nChanged attributes: size,md5,sha1,sha256\nSize changed from '32' to '60'\nOld md5sum was: '4d481386ae4e514203e0cd1f7a8098c6'\nNew md5sum is : '22b6c6112603cf431f8120ca0e96ffe5'\nOld sha1sum was: '96a3632b9ed8a49b2581daebf135a9238ebee5e4'\nNew sha1sum is : '185340b445d45ff7af7584894f5456fb87615a4e'\nOld sha256sum was: 'ca7666626c7ad7fcc52be8f5146c0972901eb1a0354a673519622a4aa2a13eac'\nNew sha256sum is : 'cea79667bca3fe076d661a4d2c99e7c37d6acc52843d24a9fc1377f43b85313d'\n",
+    "timestamp": "2026-08-26T13:34:44.948-0300"
+  },
+  "fields": {
+    "syscheck.mtime_after": [
+      "2026-08-26T13:34:44.000Z"
+    ],
+    "timestamp": [
+      "2026-08-26T16:34:44.948Z"
+    ]
+  },
+  "sort": [
+    1787762084948
+  ]
+}
